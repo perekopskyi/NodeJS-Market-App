@@ -39,6 +39,8 @@
 
         <input type="hidden" name="_csrf" value="{{csrf}}">
 
+        <p><a href="/auth/reset">Forgot password?</a></p>
+
         <button class="btn btn-primary" type="submit">Login</button>
       </form>
     </div>
@@ -49,7 +51,7 @@
       {{/if}}
 
       <h2>Register in market</h2>
-      <form action="/auth/register" method="post">
+      <form action="/auth/register" method="post" novalidate>
         <div class="input-field">
           <input
             name="email"
