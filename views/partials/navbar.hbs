@@ -1,6 +1,6 @@
 <nav>
   <div class="nav-wrapper">
-    <a href="#" class="brand-logo">Courses App</a>
+    <a href="/" class="brand-logo">Market App</a>
     <ul id="nav-mobile" class="right hide-on-med-and-down">
 
       {{#if isHome}}
@@ -15,23 +15,37 @@
       <li><a href="/courses">Courses</a></li>
       {{/if}}
 
-      {{#if isAdd}}
-      <li class="active"><a href="/add">Add course</a></li>
+      {{#if isAuth}}
+        {{#if isAdd}}
+          <li class="active"><a href="/add">Add course</a></li>
+        {{else}}
+          <li><a href="/add">Add course</a></li>
+        {{/if}}
+
+        {{#if isCard}}
+          <li class="active"><a href="/card">Card</a></li>
+        {{else}}
+          <li><a href="/card">Card</a></li>
+        {{/if}}
+
+        {{#if isOrders}}
+          <li class="active"><a href="/orders">Orders</a></li>
+        {{else}}
+          <li><a href="/orders">Orders</a></li>
+        {{/if}}
+
+        <li><a href="/auth/logout">Logout</a></li>
       {{else}}
-      <li><a href="/add">Add course</a></li>
+        {{#if isLogin}}
+          <li class="active"><a href="/auth/login#login">Login</a></li>
+        {{else}}
+          <li><a href="/auth/login#login">Login</a></li>
+        {{/if}}
       {{/if}}
 
-      {{#if isCard}}
-      <li class="active"><a href="/card">Card</a></li>
-      {{else}}
-      <li><a href="/card">Card</a></li>
-      {{/if}}
+      
 
-      {{#if isOrders}}
-      <li class="active"><a href="/orders">Orders</a></li>
-      {{else}}
-      <li><a href="/orders">Orders</a></li>
-      {{/if}}
+      
 
     </ul>
   </div>
