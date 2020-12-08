@@ -22,9 +22,9 @@ router.get('/', auth, async (req, res) => {
 
   const courses = mapCartItems(user.cart)
 
-  res.render('card', {
+  res.render('cart', {
     title: 'Cart',
-    isCard: true,
+    isCart: true,
     courses,
     price: computePrice(courses),
   })
@@ -33,7 +33,7 @@ router.get('/', auth, async (req, res) => {
 router.post('/add', auth, async (req, res) => {
   const course = await Course.findById(req.body.id)
   await req.user.addToCart(course)
-  res.redirect('/card')
+  res.redirect('/cart')
 })
 
 router.delete('/remove/:id', auth, async (req, res) => {

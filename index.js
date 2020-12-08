@@ -9,12 +9,14 @@ const MongoStore = require('connect-mongodb-session')(session)
 const homeRoutes = require('./routes/home')
 const addRoutes = require('./routes/add')
 const coursesRoutes = require('./routes/courses')
-const cardRouter = require('./routes/card')
+const cartRoutes = require('./routes/cart')
 const ordersRoutes = require('./routes/orders')
 const authRoutes = require('./routes/auth')
+const profileRoutes = require('./routes/profile')
 const varMiddleware = require('./middlewares/variables')
 const userMiddleware = require('./middlewares/user')
 const errorHandler = require('./middlewares/error')
+const fileMiddleware = require('./middlewares/file')
 const keys = require('./keys')
 
 const app = express()
@@ -37,6 +39,7 @@ app.set('view engine', 'hbs')
 app.set('views', 'views')
 
 app.use(express.static(path.join(__dirname, 'public')))
+app.use('/images', express.static(path.join(__dirname, 'images')))
 app.use(express.urlencoded({ extended: true }))
 app.use(
   session({
@@ -46,17 +49,20 @@ app.use(
     store,
   })
 )
+app.use(fileMiddleware.single('avatar'))
 app.use(csrf())
 app.use(flash())
 app.use(varMiddleware)
 app.use(userMiddleware)
 
+// Routes
 app.use('/', homeRoutes)
 app.use('/add', addRoutes)
 app.use('/courses', coursesRoutes)
-app.use('/card', cardRouter)
+app.use('/cart', cartRoutes)
 app.use('/orders', ordersRoutes)
 app.use('/auth', authRoutes)
+app.use('/profile', profileRoutes)
 
 app.use(errorHandler)
 
