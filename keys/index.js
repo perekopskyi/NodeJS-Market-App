@@ -2,8 +2,10 @@
 const MONGODB_URI =
   'mongodb://root:rootpassword@localhost:27017?retryWrites=true&w=majority' ||
   'mongodb://localhost:27017'
+const PORT = process.env.PORT || 3003
 
 module.exports = {
+  PORT,
   MONGODB_URI,
   SESSION_SECRET: 'some secret value', //! env data
   ETHEREAL_MAIL: {
