@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 const helmet = require('helmet')
 const session = require('express-session')
 const MongoStore = require('connect-mongodb-session')(session)
+const compression = require('compression')
 const homeRoutes = require('./routes/home')
 const addRoutes = require('./routes/add')
 const coursesRoutes = require('./routes/courses')
@@ -53,7 +54,12 @@ app.use(
 app.use(fileMiddleware.single('avatar'))
 app.use(csrf())
 app.use(flash())
-app.use(helmet())
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+)
+app.use(compression())
 app.use(varMiddleware)
 app.use(userMiddleware)
 
@@ -70,6 +76,7 @@ app.use(errorHandler)
 
 async function start() {
   try {
+    console.log('db', keys.MONGODB_URI)
     await mongoose.connect(keys.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
