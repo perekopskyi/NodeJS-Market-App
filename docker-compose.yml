@@ -1,8 +1,9 @@
 version: '3.7'
 services:
   mongodb_container:
+    container_name: ${COMPOSE_PROJECT_NAME}-mongodb
     image: mongo:latest
-    restart: always
+    restart: unless-stopped
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: rootpassword
@@ -10,6 +11,26 @@ services:
       - 27017:27017
     volumes:
       - mongodb_data_container:/data/db
+    logging:
+      options:
+        max-size: 100m
+        max-file: '5'
+
+  nodejs-app_conteiner:
+    container_name: ${COMPOSE_PROJECT_NAME}-nodejs-app
+    build: ./
+    restart: unless-stopped
+    ports:
+      - 3003:3003
+    environment:
+      MONGODB_URI: mongodb://root:rootpassword@mongodb_container:27017?retryWrites=true&w=majority
+      SESSION_SECRET: some secret value
+      BASE_URL: 'http://localhost:3003'
+    logging:
+      options:
+        max-size: 100m
+        max-file: '5'
 
 volumes:
   mongodb_data_container:
+    driver: local

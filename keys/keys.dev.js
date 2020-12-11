@@ -1,9 +1,10 @@
 module.exports = {
   PORT: process.env.PORT || 3003,
   MONGODB_URI:
+    process.env.MONGODB_URI ||
     'mongodb://root:rootpassword@localhost:27017?retryWrites=true&w=majority' ||
     'mongodb://localhost:27017',
-  SESSION_SECRET: 'some secret value',
+  SESSION_SECRET: process.env.SESSION_SECRET || 'some secret value',
   ETHEREAL_MAIL: {
     name: 'Serenity King',
     username: 'serenity.king63@ethereal.email', // https://ethereal.email/create
