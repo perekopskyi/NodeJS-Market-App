@@ -76,7 +76,6 @@ app.use(errorHandler)
 
 async function start() {
   try {
-    console.log('db', keys.MONGODB_URI)
     await mongoose.connect(keys.MONGODB_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
